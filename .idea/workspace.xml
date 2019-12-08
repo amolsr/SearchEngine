@@ -2,7 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="d6796588-5da5-4b5c-a24c-005defd74433" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/model/Model.js" beforeDir="false" afterPath="$PROJECT_DIR$/model/Model.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/routes/api/Scrap.js" beforeDir="false" afterPath="$PROJECT_DIR$/routes/api/Scrap.js" afterDir="false" />
@@ -103,6 +102,7 @@
       <workItem from="1575789016307" duration="13754000" />
       <workItem from="1575813188507" duration="4217000" />
       <workItem from="1575819171299" duration="267000" />
+      <workItem from="1575824920373" duration="6914000" />
     </task>
     <servers />
   </component>
@@ -114,7 +114,9 @@
       <map>
         <entry key="MAIN">
           <value>
-            <State />
+            <State>
+              <option name="COLUMN_ORDER" />
+            </State>
           </value>
         </entry>
       </map>
