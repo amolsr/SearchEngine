@@ -14,9 +14,9 @@ router.get('/', (req, res) => {
         res.send(query + "  " + TrustPilot + "  " + TrustedShops);
         const url = 'https://www.trustpilot.com/search?query=';
         scrap.find(query, url, 1);
-        console.log(scrap.dta)
-        res.render('index', {data:scrap.data});
-} else if (req.query.TrustedShops === 'on' && req.query.TrustPilot === undefined) {
+        console.log(model.data);
+        res.render('index', {data: scrap.data});
+    } else if (req.query.TrustedShops === 'on' && req.query.TrustPilot === undefined) {
         res.send(query + "  " + TrustPilot + "  " + TrustedShops);
         const url = 'https://www.trustedshops.eu/finder/?q=';
         scrap.find(query, url, 2);

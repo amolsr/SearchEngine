@@ -1,6 +1,6 @@
 const axios = require('axios');
 const cheerio = require('cheerio');
-var json = require('../../model/Model');
+const json = require('../../model/Model');
 
 let find = function find(keyword, url, option) {
     if (option === 1) {
@@ -49,5 +49,4 @@ let getDataTrustPilot = html => {
 //         console.log(json);
 //     });
 // };
-module.exports.data = json;
 module.exports.find = find;
