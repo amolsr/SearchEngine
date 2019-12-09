@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <title>Search</title>
@@ -10,49 +11,52 @@
             if (keyword === "") {
                 alert("Keyword must be filled out");
                 return false;
-            } else if ((!document.forms["Search"]["TrustPilot"].checked) && (!document.forms["Search"]["TrustedShops"].checked)) {
+            } else if ((!document.forms["Search"]["TrustPilot"].checked) && (!document.forms["Search"]["TrustedShops"]
+                    .checked)) {
                 alert('You must select page.');
                 return false
             }
         }
     </script>
 </head>
+
 <body>
-<H1>Search Engine</H1>
-<form name="Search" action="/Search" method="get" onsubmit="return validateForm()">
-    <div>
-        <label for="query">Enter Keyword to be Search: </label>
-        <input type="text" name="query" id="query"><br>
-        <label for="trustPilot">TrustPilot</label>
-        <input type="checkbox" id="trustPilot" name="TrustPilot" placeholder="TrustPilot">
-        <label for="trustedShops">TrustedShops</label>
-        <input type="checkbox" id="trustedShops" name="TrustedShops" placeholder="TrustedShops"><br>
-        <br>
-    </div>
-    <input type="submit" value="Submit">
-</form>
-<hr>
-<br>
-Search Result of <%= data.identifyingName %> are:<br/>
-<ul>
-    <% data.result.forEach((item)=>{ %>
-        <li><%= item.site %></li>
-        <li><%= item.businessUnitId %></li>
-        <li><%= item.displayName %></li>
-        <li><%= item.numberOfReviews %></li>
-        <li><%= item.validTill %></li>
-        <li><%= item.trustScore %></li>
-        <li><%= item.numberOfStars %></li>
-        <li>
+    <H1>Search Engine</H1>
+    <form name="Search" action="/Search" method="get" onsubmit="return validateForm()">
+        <div>
+            <label for="query">Enter Keyword to be Search: </label>
+            <input type="text" name="query" id="query"><br>
+            <label for="trustPilot">TrustPilot</label>
+            <input type="checkbox" id="trustPilot" name="TrustPilot" placeholder="TrustPilot">
+            <label for="trustedShops">TrustedShops</label>
+            <input type="checkbox" id="trustedShops" name="TrustedShops" placeholder="TrustedShops"><br>
+            <br>
+        </div>
+        <input type="submit" value="Submit">
+    </form>
+    <hr>
+    <br>
+    Search Result of <%= data.identifyingName %> are:<br />
+    <ul>
+        <% data.result.forEach((item)=>{ %>
+        <li> Site : <%= item.site %></li>
+        <li> Business Id : <%= item.businessUnitId %></li>
+        <li> Name : <%= item.displayName %></li>
+        <li> Number Of Review :<%= item.numberOfReviews %></li>
+        <li> Valid Till :<%= item.validTill %></li>
+        <li> Trust Score :<%= item.trustScore %></li>
+        <li> Star Count :<%= item.numberOfStars %></li>
+        <li> Categories
             <ul>
                 <% item.categories.forEach((cat)=>{ %>
-                    <li><%= cat %></li>
+                <li><%= cat %></li>
                 <% }); %>
             </ul>
         </li>
-        <li><%= item.displayImage %></li>
-        <li><%= item.description %></li>
-    <% }); %>
-</ul>
+        <li><img src="<%= item.displayImage %>" /></li>
+        <li> Description :<%= item.description %></li>
+        <% }); %>
+    </ul>
 </body>
+
 </html>
