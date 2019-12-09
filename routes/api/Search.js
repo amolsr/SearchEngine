@@ -7,15 +7,18 @@ router.get('/data', (req, res) => {
     res.json(model.data);
 });
 router.get('/', (req, res) => {
-    scrap.data.result=[];
+    scrap.data.result = [];
     var query = req.query.query;
     var TrustPilot = req.query.TrustPilot;
     var TrustedShops = req.query.TrustedShops;
     if (req.query.TrustPilot === 'on' && req.query.TrustedShops === undefined) {
-        const url = 'https://www.trustpilot.com/search?query=';
-        scrap.find(query, url, 1);
-        console.log(scrap.data);
-        res.render('index', {data: scrap.data});
+        async function f() {
+            const url = 'https://www.trustpilot.com/search?query=';
+            scrap.find(query, url, 1);
+            await sleep(246);
+            console.log(scrap.data);
+        }
+        f().then(() => res.render('index', {data: scrap.data}));
     } else if (req.query.TrustedShops === 'on' && req.query.TrustPilot === undefined) {
         res.send(query + "  " + TrustPilot + "  " + TrustedShops);
         const url = 'https://www.trustedshops.eu/finder/?q=';
@@ -28,5 +31,11 @@ router.get('/', (req, res) => {
     }
 
 });
+
+function sleep(ms){
+    return new Promise(resolve=>{
+        setTimeout(resolve,ms)
+    })
+}
 
 module.exports = router;

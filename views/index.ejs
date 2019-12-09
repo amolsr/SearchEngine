@@ -45,13 +45,6 @@ Search Result of <%= data.identifyingName %> are:<br/>
         <li><%= item.numberOfStars %></li>
         <li>
             <ul>
-                <% item.location.forEach((loc)=>{ %>
-                    <li><%= loc %></li>
-                <% }); %>
-            </ul>
-        </li>
-        <li>
-            <ul>
                 <% item.categories.forEach((cat)=>{ %>
                     <li><%= cat %></li>
                 <% }); %>

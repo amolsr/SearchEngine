@@ -3,9 +3,8 @@
   <component name="ChangeListManager">
     <list default="true" id="d6796588-5da5-4b5c-a24c-005defd74433" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/model/Model.js" beforeDir="false" afterPath="$PROJECT_DIR$/model/Model.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/routes/api/Scrap.js" beforeDir="false" afterPath="$PROJECT_DIR$/routes/api/Scrap.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/routes/api/Search.js" beforeDir="false" afterPath="$PROJECT_DIR$/routes/api/Search.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/views/index.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/index.ejs" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -65,8 +64,8 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Node.js.api.js">
-    <configuration name="api.js" type="NodeJSConfigurationType" temporary="true" nameIsGenerated="true" path-to-js-file="$PROJECT_DIR$/routes/api.js" working-dir="$PROJECT_DIR$/routes">
+  <component name="RunManager" selected="Node.js.app.js">
+    <configuration name="app.js" type="NodeJSConfigurationType" temporary="true" nameIsGenerated="true" path-to-js-file="app.js" working-dir="$PROJECT_DIR$/">
       <method v="2" />
     </configuration>
     <configuration name="start" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
@@ -79,9 +78,13 @@
       <envs />
       <method v="2" />
     </configuration>
+    <list>
+      <item itemvalue="Node.js.app.js" />
+      <item itemvalue="npm.start" />
+    </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Node.js.api.js" />
+        <item itemvalue="Node.js.app.js" />
         <item itemvalue="npm.start" />
       </list>
     </recent_temporary>
@@ -102,7 +105,10 @@
       <workItem from="1575789016307" duration="13754000" />
       <workItem from="1575813188507" duration="4217000" />
       <workItem from="1575819171299" duration="267000" />
-      <workItem from="1575824920373" duration="6914000" />
+      <workItem from="1575824920373" duration="8260000" />
+      <workItem from="1575887478260" duration="159000" />
+      <workItem from="1575892266090" duration="182000" />
+      <workItem from="1575894799463" duration="985000" />
     </task>
     <servers />
   </component>
