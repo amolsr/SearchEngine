@@ -16,7 +16,7 @@
     "moment": "^2.24.0",
     "path": "^0.12.7",
     "request": "latest",
-    "axios": "^0.19.0",
+    "axios": "^0.19.0"
   },
   "devDependencies": {
     "nodemon": "^2.0.1"
