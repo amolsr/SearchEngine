@@ -1,4 +1,3 @@
-const axios = require('axios');
 const cheerio = require('cheerio');
 const rp = require('request-promise');
 const model = require('../../model/Model');
@@ -107,6 +106,7 @@ const getTrustedShops = async (baseURL, searchURL, Host, keyword) => {
             entry.description = data.find('shop-details > div > div.col-12.fw-light.mt-1').html();
             entry.validTill = data.find('div.col.certificate-details > div:nth-child(3) > div > span:nth-child(3)').html();
         });
+        console.log(entry);
         return entry;
     });
     return Promise.all(entryMap);
