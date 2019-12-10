@@ -3,10 +3,12 @@
   <component name="ChangeListManager">
     <list default="true" id="d6796588-5da5-4b5c-a24c-005defd74433" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/model/Model.js" beforeDir="false" afterPath="$PROJECT_DIR$/model/Model.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routes/api/Scrap.js" beforeDir="false" afterPath="$PROJECT_DIR$/routes/api/Scrap.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/routes/api/Search.js" beforeDir="false" afterPath="$PROJECT_DIR$/routes/api/Search.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/views/index.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/index.ejs" afterDir="false" />
     </list>
-    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -28,6 +30,11 @@
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="ProjectId" id="1UeqWrni0F8mKFy8bGw6EAV2wdn" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showExcludedFiles" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
   <component name="PropertiesComponent">
     <property name="DefaultHtmlFileTemplate" value="HTML File" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
@@ -51,18 +58,6 @@
       <recent name="F:\Projects\Search Engine\model" />
       <recent name="F:\Projects\Search Engine" />
     </key>
-  </component>
-  <component name="RunDashboard">
-    <option name="ruleStates">
-      <list>
-        <RuleState>
-          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
-        </RuleState>
-        <RuleState>
-          <option name="name" value="StatusDashboardGroupingRule" />
-        </RuleState>
-      </list>
-    </option>
   </component>
   <component name="RunManager" selected="Node.js.app.js">
     <configuration name="app.js" type="NodeJSConfigurationType" temporary="true" nameIsGenerated="true" path-to-js-file="app.js" working-dir="$PROJECT_DIR$/">
@@ -89,6 +84,18 @@
       </list>
     </recent_temporary>
   </component>
+  <component name="ServiceViewManager">
+    <option name="viewStates">
+      <list>
+        <serviceView>
+          <treeState>
+            <expand />
+            <select />
+          </treeState>
+        </serviceView>
+      </list>
+    </option>
+  </component>
   <component name="SvnConfiguration">
     <configuration />
   </component>
@@ -109,6 +116,9 @@
       <workItem from="1575887478260" duration="159000" />
       <workItem from="1575892266090" duration="182000" />
       <workItem from="1575894799463" duration="985000" />
+      <workItem from="1575978895221" duration="565000" />
+      <workItem from="1575979653569" duration="110000" />
+      <workItem from="1575979773204" duration="16379000" />
     </task>
     <servers />
   </component>
@@ -127,5 +137,19 @@
         </entry>
       </map>
     </option>
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="449" y="140" key="#com.intellij.openapi.updateSettings.impl.PluginUpdateInfoDialog" timestamp="1575979757200">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="449" y="140" key="#com.intellij.openapi.updateSettings.impl.PluginUpdateInfoDialog/0.0.1536.824@0.0.1536.824" timestamp="1575979757200" />
+    <state x="452" y="133" width="631" height="558" key="find.popup" timestamp="1575998226663">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="452" y="133" width="631" height="558" key="find.popup/0.0.1536.824@0.0.1536.824" timestamp="1575998226663" />
+    <state x="425" y="187" key="run.anything.popup" timestamp="1575999627850">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="425" y="187" key="run.anything.popup/0.0.1536.824@0.0.1536.824" timestamp="1575999627850" />
   </component>
 </project>

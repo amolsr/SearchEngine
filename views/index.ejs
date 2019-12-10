@@ -12,7 +12,7 @@
                 alert("Keyword must be filled out");
                 return false;
             } else if ((!document.forms["Search"]["TrustPilot"].checked) && (!document.forms["Search"]["TrustedShops"]
-                    .checked)) {
+                .checked)) {
                 alert('You must select page.');
                 return false
             }
@@ -21,42 +21,45 @@
 </head>
 
 <body>
-    <H1>Search Engine</H1>
-    <form name="Search" action="/Search" method="get" onsubmit="return validateForm()">
-        <div>
-            <label for="query">Enter Keyword to be Search: </label>
-            <input type="text" name="query" id="query"><br>
-            <label for="trustPilot">TrustPilot</label>
-            <input type="checkbox" id="trustPilot" name="TrustPilot" placeholder="TrustPilot">
-            <label for="trustedShops">TrustedShops</label>
-            <input type="checkbox" id="trustedShops" name="TrustedShops" placeholder="TrustedShops"><br>
-            <br>
-        </div>
-        <input type="submit" value="Submit">
-    </form>
-    <hr>
-    <br>
-    Search Result of <%= data.identifyingName %> are:<br />
-    <ul>
-        <% data.result.forEach((item)=>{ %>
+<H1>Search Engine</H1>
+<form name="Search" action="/Search" method="get" onsubmit="return validateForm()">
+    <div>
+        <label for="query">Enter Keyword to be Search: </label>
+        <input type="text" name="query" id="query"><br>
+        <label for="trustPilot">TrustPilot</label>
+        <input type="checkbox" id="trustPilot" name="TrustPilot" placeholder="TrustPilot">
+        <label for="trustedShops">TrustedShops</label>
+        <input type="checkbox" id="trustedShops" name="TrustedShops" placeholder="TrustedShops"><br>
+        <br>
+    </div>
+    <input type="submit" value="Submit">
+</form>
+<hr>
+<br>
+Search Result of <%= data.identifyingName %> are:<br/>
+<ul>
+    <% data.result.forEach((item)=>{ %>
+        <br>
         <li> Site : <%= item.site %></li>
         <li> Business Id : <%= item.businessUnitId %></li>
         <li> Name : <%= item.displayName %></li>
+        <li> URL : <%= item.url %></li>
         <li> Number Of Review :<%= item.numberOfReviews %></li>
-        <li> Valid Till :<%= item.validTill %></li>
+        <li> Claimed :<%= item.claimed %></li>
         <li> Trust Score :<%= item.trustScore %></li>
         <li> Star Count :<%= item.numberOfStars %></li>
         <li> Categories
             <ul>
                 <% item.categories.forEach((cat)=>{ %>
-                <li><%= cat %></li>
+                    <li><%= cat %></li>
                 <% }); %>
             </ul>
         </li>
-        <li><img src="<%= item.displayImage %>" /></li>
+        <li><img src="<%= item.displayImage %>"/></li>
         <li> Description :<%= item.description %></li>
-        <% }); %>
-    </ul>
+        <br>
+    <% }); %>
+</ul>
 </body>
 
 </html>

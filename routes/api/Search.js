@@ -11,18 +11,13 @@ router.get('/', (req, res) => {
     var query = req.query.query;
     var TrustPilot = req.query.TrustPilot;
     var TrustedShops = req.query.TrustedShops;
+    model.data.identifyingName = query;
     if (req.query.TrustPilot === 'on' && req.query.TrustedShops === undefined) {
-        async function f() {
-            const url = 'https://www.trustpilot.com/search?query=';
-            scrap.find(query, url, 1);
-            await sleep(246);
-            console.log(scrap.data);
-        }
-        f().then(() => res.render('index', {data: scrap.data}));
+        Search("TrustPilot", 'https://www.trustpilot.com/', 'search?query=', query)
+            .then((result) => res.render('index', {data: result}));
     } else if (req.query.TrustedShops === 'on' && req.query.TrustPilot === undefined) {
-        res.send(query + "  " + TrustPilot + "  " + TrustedShops);
-        const url = 'https://www.trustedshops.eu/finder/?q=';
-        scrap.find(query, url, 2);
+        Search("TrustedShops", 'https://www.trustedshops.de/', 'bewertung/info_', query)
+            .then((result) => res.render('index', {data: result}));
     } else {
         res.send(query + "  " + TrustPilot + "  " + TrustedShops);
         const url1 = 'https://www.trustpilot.com/search?query=';
@@ -32,10 +27,10 @@ router.get('/', (req, res) => {
 
 });
 
-function sleep(ms){
-    return new Promise(resolve=>{
-        setTimeout(resolve,ms)
-    })
+async function Search(site, baseURL, searchURL, keyword) {
+    const subURL = searchURL + keyword;
+    await scrap.find(baseURL, subURL, site, keyword);
+    return scrap.data;
 }
 
 module.exports = router;
