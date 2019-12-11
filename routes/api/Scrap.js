@@ -5,7 +5,7 @@ let find = async (baseURL, searchURL, Host, keyword) => {
     if (Host === "TrustPilot") {
         await getTrustPilot(baseURL, searchURL + keyword, Host).then(r => model.data.result = r);
     } else if (Host === "TrustedShops") {
-        await getTrustedShops(baseURL, searchURL, Host, keyword).then(r => r => model.data.result = r);
+        await getTrustedShops(baseURL, searchURL, Host, keyword).then(r => model.data.result = r);
     } else {
         await getTrustPilot(baseURL, searchURL + keyword, Host).then(r => model.data.result = r);
         await getTrustedShops(baseURL, searchURL, Host, keyword).then(r => r => model.data.result = model.data.result.concat(r));
@@ -15,8 +15,31 @@ let find = async (baseURL, searchURL, Host, keyword) => {
 
 const getTrustPilot = async (baseURL, searchURL, Host) => {
     const html = await rp(baseURL + searchURL);
-    console.log(html);
-    const entryMap = cheerio('a.search-result-heading', html).map(async (i, e) => {
+    const $ = cheerio.load(html);
+    if ($('body').find('a.search-result-heading').html()) {
+        const entryMap = cheerio('a.search-result-heading', html).map(async (i, e) => {
+            var entry = {
+                "site": "",
+                "businessUnitId": "",
+                "displayName": "",
+                "url": "",
+                "claimed": "",
+                "numberOfReviews": "",
+                "trustScore": "",
+                "numberOfStars": "",
+                "categories": [],
+                "displayImage": "",
+                "description": ""
+            };
+            entry.url = e.attribs.href.slice(8);
+            entry.site = Host;
+            const link = baseURL + e.attribs.href;
+            const innerHtml = await rp(link);
+            parseTrustPilot(innerHtml, entry);
+            return entry;
+        }).get();
+        return Promise.all(entryMap);
+    } else {
         var entry = {
             "site": "",
             "businessUnitId": "",
@@ -30,40 +53,11 @@ const getTrustPilot = async (baseURL, searchURL, Host) => {
             "displayImage": "",
             "description": ""
         };
-        entry["url"] = e.attribs.href.slice(8);
-        const link = baseURL + e.attribs.href;
-        const innerHtml = await rp(link);
-        const $ = cheerio.load(innerHtml);
-        $('head').filter(function () {
-            const data = $(this);
-            const string1 = data.find('script[type="application/json"][data-initial-state="business-unit-info"]').html().trim();
-            const string2 = data.find('script[type="application/json"][data-initial-state="business-unit-tracking-properties"]').html().trim();
-            JSON.parse(string1, (key1, val1) => {
-                Object.keys(entry).forEach(function (key) {
-                    if (key === key1) {
-                        entry[key] = val1;
-                    }
-                })
-            });
-            JSON.parse(string2, (key1, val1) => {
-                Object.keys(entry).forEach(function (key) {
-                    if (key1 === key) {
-                        entry[key] = val1;
-                    }
-                })
-            });
-            entry.categories = JSON.parse(string2)["categories"];
-            entry.site = Host;
-        });
-        $('body > main').filter(function () {
-            const data = $(this);
-            entry["displayImage"] = data.find('img.business-unit-profile-summary__image').attr("src");
-            entry["description"] = data.find('.badge-card__section.inviting-status span').html();
-            data.find('span.badge-card__title').html().trim();
-        });
-        return entry;
-    }).get();
-    return Promise.all(entryMap);
+        entry.url = searchURL.slice(searchURL.lastIndexOf("=") + 1,);
+        entry.site = Host;
+        parseTrustPilot(html, entry);
+        return Promise.all([entry]);
+    }
 };
 
 const getTrustedShops = async (baseURL, searchURL, Host, keyword) => {
@@ -106,10 +100,39 @@ const getTrustedShops = async (baseURL, searchURL, Host, keyword) => {
             entry.description = data.find('shop-details > div > div.col-12.fw-light.mt-1').html();
             entry.validTill = data.find('div.col.certificate-details > div:nth-child(3) > div > span:nth-child(3)').html();
         });
-        console.log(entry);
+        // console.log(entry);
         return entry;
     });
     return Promise.all(entryMap);
+};
+let parseTrustPilot = (html, entry) => {
+    const $ = cheerio.load(html);
+    $('head').filter(function () {
+        const data = $(this);
+        const string1 = data.find('script[type="application/json"][data-initial-state="business-unit-info"]').html().trim();
+        const string2 = data.find('script[type="application/json"][data-initial-state="business-unit-tracking-properties"]').html().trim();
+        JSON.parse(string1, (key1, val1) => {
+            Object.keys(entry).forEach(function (key) {
+                if (key === key1) {
+                    entry[key] = val1;
+                }
+            })
+        });
+        JSON.parse(string2, (key1, val1) => {
+            Object.keys(entry).forEach(function (key) {
+                if (key1 === key) {
+                    entry[key] = val1;
+                }
+            })
+        });
+        entry.categories = JSON.parse(string2)["categories"];
+    });
+    $('body > main').filter(function () {
+        const data = $(this);
+        entry["displayImage"] = data.find('img.business-unit-profile-summary__image').attr("src");
+        entry["description"] = data.find('.badge-card__section.inviting-status span').html();
+        data.find('span.badge-card__title').html().trim();
+    });
 };
 
 module.exports.data = model.data;

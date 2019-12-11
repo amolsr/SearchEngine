@@ -8,9 +8,7 @@ router.get('/data', (req, res) => {
 });
 router.get('/', (req, res) => {
     scrap.data.result = [];
-    var query = req.query.query;
-    var TrustPilot = req.query.TrustPilot;
-    var TrustedShops = req.query.TrustedShops;
+    const query = req.query.query;
     model.data.identifyingName = query;
     if (req.query.TrustPilot === 'on' && req.query.TrustedShops === undefined) {
         scrap.find('https://www.trustpilot.com/', 'search?query=', "TrustPilot", query)
@@ -25,10 +23,10 @@ router.get('/', (req, res) => {
                 res.render('index', {data: result})
             });
     } else {
-        res.send(query + "  " + TrustPilot + "  " + TrustedShops);
+        // res.send(query + "  " + TrustPilot + "  " + TrustedShops);
         const url1 = 'https://www.trustpilot.com/search?query=';
         const url2 = 'https://www.trustedshops.de/shops/?q=';
-        scrap.find(query, url1, url2);
+        // scrap.find(query, url1, url2);
     }
 
 });
