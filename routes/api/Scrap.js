@@ -97,12 +97,11 @@ const getTrustedShops = async (baseURL, searchURL, Host, keyword) => {
             const data = $(this);
             data.find('span.category > span').each((index, element) => {
                 if (!entry.categories.includes($(element).html()))
-                    entry.categories.push($(element).html());
+                    entry.categories.push(escape($(element).html()));
             });
-            entry.description = data.find('shop-details > div > div.col-12.fw-light.mt-1').html();
+            entry.description = escape(data.find('shop-details > div > div.col-12.fw-light.mt-1').html());
             entry.validTill = data.find('div.col.certificate-details > div:nth-child(3) > div > span:nth-child(3)').html();
         });
-        // console.log(entry);
         return entry;
     });
     return Promise.all(entryMap);
@@ -127,13 +126,14 @@ let parseTrustPilot = (html, entry) => {
                 }
             })
         });
-        entry.categories = JSON.parse(string2)["categories"];
+        entry.categories = JSON.parse(string2)["categories"].map((e) => {
+            return escape(e)
+        });
     });
     $('body > main').filter(function () {
         const data = $(this);
         entry["displayImage"] = data.find('img.business-unit-profile-summary__image').attr("src");
-        entry["description"] = data.find('.badge-card__section.inviting-status span').html();
-        data.find('span.badge-card__title').html().trim();
+        entry["description"] = escape(data.find('.badge-card__section.inviting-status span').html());
     });
 };
 

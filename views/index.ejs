@@ -12,7 +12,7 @@
                 alert("Keyword must be filled out");
                 return false;
             } else if ((!document.forms["Search"]["TrustPilot"].checked) && (!document.forms["Search"]["TrustedShops"]
-                .checked)) {
+                    .checked)) {
                 alert('You must select page.');
                 return false
             }
@@ -20,22 +20,22 @@
     </script>
 </head>
 <body>
-<H1>Search Engine</H1>
-<form name="Search" action="/Search" method="get" onsubmit="return validateForm()">
-    <div>
-        <label for="query">Enter Keyword to be Search: </label>
-        <input type="text" name="query" id="query"><br>
-        <label for="trustPilot">TrustPilot</label>
-        <input type="checkbox" id="trustPilot" name="TrustPilot" placeholder="TrustPilot">
-        <label for="trustedShops">TrustedShops</label>
-        <input type="checkbox" id="trustedShops" name="TrustedShops" placeholder="TrustedShops">
-    </div>
-    <input class="btn btn-primary" type="submit" value="Submit">
-</form>
-<hr>
-<p class="ml-4">Search Result of <%= data.identifyingName %> are:</p>
-<ul>
-    <% data.result.forEach((item)=>{ %>
+    <H1>Search Engine</H1>
+    <form name="Search" action="/Search" method="get" onsubmit="return validateForm()">
+        <div>
+            <label for="query">Enter Keyword to be Search: </label>
+            <input type="text" name="query" id="query"><br>
+            <label for="trustPilot">TrustPilot</label>
+            <input type="checkbox" id="trustPilot" name="TrustPilot" placeholder="TrustPilot">
+            <label for="trustedShops">TrustedShops</label>
+            <input type="checkbox" id="trustedShops" name="TrustedShops" placeholder="TrustedShops">
+        </div>
+        <input class="btn btn-primary" type="submit" value="Submit">
+    </form>
+    <hr>
+    <p class="ml-4">Search Result of <%= data.identifyingName %> are:</p>
+    <ul>
+        <% data.result.forEach((item)=>{ %>
         <div class="card mb-1" style="max-width: 95%;">
             <div class="row no-gutters">
                 <div class="col-md-2">
@@ -44,28 +44,29 @@
                 <div class="col-md-10">
                     <div class="card-body">
                         <h5 class="card-title"><%= item.displayName %> from <%= item.site %></h5>
-                        <p class="card-text"><small class="text-muted">Review :<%= item.numberOfReviews %> &emsp;
+                        <p class="card-text"><small class="text-muted">Review: <%= item.numberOfReviews %> &emsp;
                                 <% if (item.claimed) { %>
-                                    Claimed :<%= item.claimed %>
+                                Claimed: <%= item.claimed %>
                                 <% } %>
                                 <% if (item.validTill) { %>
-                                    Certified On :<%= item.validTill %>
+                                Certified On: <%= item.validTill %>
                                 <% } %>
                             </small></p>
-                        <p class="card-text"> Star Count :<%= item.numberOfStars %> &emsp; Trust Score
-                            :<%= item.trustScore %> &emsp;
-                            Categories :
-                            <% item.categories.forEach((cat)=>{ %>
-                                <%= cat %>
+                        <p class="card-text"> Star Count: <%= item.numberOfStars %> &emsp;
+                            <% if (item.trustScore) { %>
+                            Trust Score: <%= item.trustScore %>
+                            <% } %> &emsp;
+                            Categories: <% item.categories.forEach((cat)=>{ %>
+                            <%- unescape(cat) %>
                             <% }); %>
                         </p>
-                        <p class="card-text">Description :<%= item.description %></p>
+                        <p class="card-text">Description: <%- unescape(item.description) %></p>
                     </div>
                 </div>
             </div>
         </div>
-    <% }); %>
-</ul>
+        <% }); %>
+    </ul>
 </body>
 
 </html>
