@@ -6,6 +6,7 @@ const router = express.Router();
 router.get('/data', (req, res) => {
     res.json(model.data);
 });
+
 router.get('/', (req, res) => {
     scrap.data.result = [];
     const query = req.query.query;
@@ -23,10 +24,11 @@ router.get('/', (req, res) => {
                 res.render('index', {data: result})
             });
     } else {
-        // res.send(query + "  " + TrustPilot + "  " + TrustedShops);
-        const url1 = 'https://www.trustpilot.com/search?query=';
-        const url2 = 'https://www.trustedshops.de/shops/?q=';
-        // scrap.find(query, url1, url2);
+        scrap.find(['https://www.trustpilot.com/', 'https://www.trustedshops.de/'], ['search?query=', 'bewertung/info_'], ["TrustPilot", "TrustedShops"], query)
+            .then((result) => {
+                console.log(result);
+                res.render('index', {data: result})
+            });
     }
 
 });

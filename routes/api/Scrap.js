@@ -2,13 +2,15 @@ const cheerio = require('cheerio');
 const rp = require('request-promise');
 const model = require('../../model/Model');
 let find = async (baseURL, searchURL, Host, keyword) => {
-    if (Host === "TrustPilot") {
-        await getTrustPilot(baseURL, searchURL + keyword, Host).then(r => model.data.result = r);
-    } else if (Host === "TrustedShops") {
-        await getTrustedShops(baseURL, searchURL, Host, keyword).then(r => model.data.result = r);
+    if (!(typeof baseURL === "object")) {
+        if (Host === "TrustPilot") {
+            await getTrustPilot(baseURL, searchURL + keyword, Host).then(r => model.data.result = r);
+        } else if (Host === "TrustedShops") {
+            await getTrustedShops(baseURL, searchURL, Host, keyword).then(r => model.data.result = r);
+        }
     } else {
-        await getTrustPilot(baseURL, searchURL + keyword, Host).then(r => model.data.result = r);
-        await getTrustedShops(baseURL, searchURL, Host, keyword).then(r => r => model.data.result = model.data.result.concat(r));
+        await getTrustPilot(baseURL[0], searchURL[0] + keyword, Host[0]).then(r => model.data.result = r);
+        await getTrustedShops(baseURL[1], searchURL[1], Host[1], keyword).then(r => model.data.result = model.data.result.concat(r));
     }
     return model.data;
 };
