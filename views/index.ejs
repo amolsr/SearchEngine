@@ -1,8 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <meta charset="UTF-8">
+    <meta http-equiv="content-type" content="text/html; charset=ISO-8859-1">
     <title>Search</title>
     <link rel="stylesheet" href="./css/style.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
@@ -42,10 +41,10 @@
                 <div class="col-md-2">
                     <img class="card-img" src="<%= item.displayImage %>">
                 </div>
-                <div class="col-md-7">
+                <div class="col-md-10">
                     <div class="card-body">
                         <h5 class="card-title"><%= item.displayName %> from <%= item.site %></h5>
-                        <p class="card-text"><small class="text-muted">Review :<%= item.numberOfReviews %>
+                        <p class="card-text"><small class="text-muted">Review :<%= item.numberOfReviews %> &emsp;
                                 <% if (item.claimed) { %>
                                     Claimed :<%= item.claimed %>
                                 <% } %>
@@ -53,8 +52,8 @@
                                     Certified On :<%= item.validTill %>
                                 <% } %>
                             </small></p>
-                        <p class="card-text"> Star Count :<%= item.numberOfStars %> Trust Score :<%= item.trustScore %>
-                            Categories
+                        <p class="card-text"> Star Count :<%= item.numberOfStars %> &emsp; Trust Score :<%= item.trustScore  &emsp;
+                            Categories :
                             <% item.categories.forEach((cat)=>{ %>
                                 <%= cat %>
                             <% }); %>
