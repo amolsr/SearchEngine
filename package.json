@@ -16,10 +16,10 @@
     "moment": "^2.24.0",
     "path": "^0.12.7",
     "request": "latest",
-    "request-promise": "^4.2.5"
+    "request-promise": "^4.2.5",
+    "puppeteer": "^2.0.0"
   },
   "devDependencies": {
-    "nodemon": "^2.0.1",
-    "puppeteer": "^2.0.0"
+    "nodemon": "^2.0.1"
   }
 }
