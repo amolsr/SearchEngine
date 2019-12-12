@@ -2,12 +2,13 @@ const cheerio = require('cheerio');
 const rp = require('request-promise');
 const model = require('../../model/Model');
 const puppeteer = require('puppeteer');
+
 let find = async (baseURL, searchURL, Host, keyword) => {
     if (!(typeof baseURL === "object")) {
         if (Host === "TrustPilot") {
             await getTrustPilot(baseURL, searchURL + keyword).then(r => model.data.result = r);
         } else if (Host === "TrustedShops") {
-            await getTrustedShops(baseURL, searchURL, Host, keyword).then(r => model.data.result = r);
+            await getTrustedShops(baseURL, searchURL, keyword).then(r => model.data.result = r);
         }
     } else {
         await getTrustPilot(baseURL[0], searchURL[0] + keyword).then(r => model.data.result = r);
@@ -16,25 +17,38 @@ let find = async (baseURL, searchURL, Host, keyword) => {
     return model.data;
 };
 
+let fetchTill = (async (url, componentSelector) => {
+    const browser = await puppeteer.launch();
+    const page = await browser.newPage();
+    await page.goto(url); // Add the URL you want to fetch
+    await page.waitForSelector(componentSelector, {
+        timeout: 5000,
+    });
+    let bodyHTML = await page.evaluate(() => document.head.innerHTML + document.body.innerHTML);
+    await browser.close();
+    return bodyHTML;
+});
+
 const getTrustPilot = async (baseURL, searchURL) => {
-    const html = await rp(baseURL + searchURL);
-    const $ = cheerio.load(html);
-    if ($('body').find('a.search-result-heading').html()) {
+    try {
+        const html = await fetchTill(baseURL + searchURL, 'aside.company-info');
+        const url = searchURL.slice(searchURL.lastIndexOf("=") + 1,);
+        console.log(html);
+        const entry = parseTrustPilot(html, url);
+        return Promise.all([entry]);
+    } catch (e) {
+        const html = await rp(baseURL + searchURL);
         const entryMap = cheerio('a.search-result-heading', html).map(async (i, e) => {
             const url = e.attribs.href.slice(8);
             const link = baseURL + e.attribs.href;
-            const innerHtml = await rp(link);
+            const innerHtml = await fetchTill(link, 'aside.company-info');
             return parseTrustPilot(innerHtml, url);
         }).get();
         return Promise.all(entryMap);
-    } else {
-        const url = searchURL.slice(searchURL.lastIndexOf("=") + 1,);
-        const entry = parseTrustPilot(html, url);
-        return Promise.all([entry]);
     }
 };
 
-const getTrustedShops = async (baseURL, searchURL, Host, keyword) => {
+const getTrustedShops = async (baseURL, searchURL, keyword) => {
     const url = "http://api.trustedshops.com/rest/public/v2/shops.json?url=";
     const response = await rp(url + keyword);
     var apiData = JSON.parse(response);
@@ -117,10 +131,11 @@ let parseTrustPilot = (html, url) => {
     });
     $('body > main').filter(function () {
         const data = $(this);
-        entry["displayImage"] = data.find('img.business-unit-profile-summary__image').attr("src");
-        entry["description"] = escape(data.find('.badge-card__section.inviting-status span').html());
+        entry.displayImage = data.find('img.business-unit-profile-summary__image').attr("src");
+        entry.claimed = data.find('.badge-card__section.inviting-status span').html().trim();
+        entry.description = escape(data.find('div.company-description__text').text());
     });
-    return entry
+    return entry;
 };
 
 module.exports.data = model.data;

@@ -28,7 +28,7 @@ router.get('/', (req, res) => {
             .then((result) => {
                 console.log(result);
                 res.render('index', {data: result})
-            });
+            }).catch((e)=> console.log(e));
     }
 
 });
