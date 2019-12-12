@@ -1,63 +1,35 @@
 const cheerio = require('cheerio');
 const rp = require('request-promise');
 const model = require('../../model/Model');
+const puppeteer = require('puppeteer');
 let find = async (baseURL, searchURL, Host, keyword) => {
     if (!(typeof baseURL === "object")) {
         if (Host === "TrustPilot") {
-            await getTrustPilot(baseURL, searchURL + keyword, Host).then(r => model.data.result = r);
+            await getTrustPilot(baseURL, searchURL + keyword).then(r => model.data.result = r);
         } else if (Host === "TrustedShops") {
             await getTrustedShops(baseURL, searchURL, Host, keyword).then(r => model.data.result = r);
         }
     } else {
-        await getTrustPilot(baseURL[0], searchURL[0] + keyword, Host[0]).then(r => model.data.result = r);
-        await getTrustedShops(baseURL[1], searchURL[1], Host[1], keyword).then(r => model.data.result = model.data.result.concat(r));
+        await getTrustPilot(baseURL[0], searchURL[0] + keyword).then(r => model.data.result = r);
+        await getTrustedShops(baseURL[1], searchURL[1], keyword).then(r => model.data.result = model.data.result.concat(r));
     }
     return model.data;
 };
 
-const getTrustPilot = async (baseURL, searchURL, Host) => {
+const getTrustPilot = async (baseURL, searchURL) => {
     const html = await rp(baseURL + searchURL);
     const $ = cheerio.load(html);
     if ($('body').find('a.search-result-heading').html()) {
         const entryMap = cheerio('a.search-result-heading', html).map(async (i, e) => {
-            var entry = {
-                "site": "",
-                "businessUnitId": "",
-                "displayName": "",
-                "url": "",
-                "claimed": "",
-                "numberOfReviews": "",
-                "trustScore": "",
-                "numberOfStars": "",
-                "categories": [],
-                "displayImage": "",
-                "description": ""
-            };
-            entry.url = e.attribs.href.slice(8);
-            entry.site = Host;
+            const url = e.attribs.href.slice(8);
             const link = baseURL + e.attribs.href;
             const innerHtml = await rp(link);
-            parseTrustPilot(innerHtml, entry);
-            return entry;
+            return parseTrustPilot(innerHtml, url);
         }).get();
         return Promise.all(entryMap);
     } else {
-        var entry = {
-            "site": "",
-            "businessUnitId": "",
-            "displayName": "",
-            "url": "",
-            "claimed": "",
-            "numberOfReviews": "",
-            "trustScore": "",
-            "numberOfStars": "",
-            "categories": [],
-            "displayImage": "",
-            "description": ""
-        };
-        entry.url = searchURL.slice(searchURL.lastIndexOf("=") + 1,);
-        entry.site = Host;
-        parseTrustPilot(html, entry);
+        const url = searchURL.slice(searchURL.lastIndexOf("=") + 1,);
+        const entry = parseTrustPilot(html, url);
         return Promise.all([entry]);
     }
 };
@@ -71,7 +43,7 @@ const getTrustedShops = async (baseURL, searchURL, Host, keyword) => {
         const innerHtml = await rp(link);
         const $ = cheerio.load(innerHtml);
         var entry = {
-            "site": "",
+            "site": "TrustedShops",
             "displayName": "",
             "url": "",
             "validTill": "",
@@ -81,8 +53,6 @@ const getTrustedShops = async (baseURL, searchURL, Host, keyword) => {
             "displayImage": "",
             "description": ""
         };
-        entry["site"] = Host;
-        entry.site = Host;
         entry["url"] = i.url;
         $('head').filter(function () {
             const data = $(this);
@@ -106,7 +76,22 @@ const getTrustedShops = async (baseURL, searchURL, Host, keyword) => {
     });
     return Promise.all(entryMap);
 };
-let parseTrustPilot = (html, entry) => {
+
+let parseTrustPilot = (html, url) => {
+    var entry = {
+        "site": "TrustPilot",
+        "businessUnitId": "",
+        "displayName": "",
+        "url": "",
+        "claimed": "",
+        "numberOfReviews": "",
+        "trustScore": "",
+        "numberOfStars": "",
+        "categories": [],
+        "displayImage": "",
+        "description": ""
+    };
+    entry.url = url;
     const $ = cheerio.load(html);
     $('head').filter(function () {
         const data = $(this);
@@ -135,6 +120,7 @@ let parseTrustPilot = (html, entry) => {
         entry["displayImage"] = data.find('img.business-unit-profile-summary__image').attr("src");
         entry["description"] = escape(data.find('.badge-card__section.inviting-status span').html());
     });
+    return entry
 };
 
 module.exports.data = model.data;
