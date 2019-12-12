@@ -18,7 +18,13 @@ let find = async (baseURL, searchURL, Host, keyword) => {
 };
 
 let fetchTill = (async (url, componentSelector) => {
-    const browser = await puppeteer.launch({args: ['--no-sandbox']});
+    const browser = await puppeteer.launch({
+        args: [
+            '--no-sandbox',
+            '--disable-setuid-sandbox',
+            '--disable-dev-shm-usage'
+        ]
+    });
     const page = await browser.newPage();
     await page.goto(url); // Add the URL you want to fetch
     await page.waitForSelector(componentSelector, {

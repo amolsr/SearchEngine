@@ -22,7 +22,7 @@ router.get('/', (req, res) => {
             .then((result) => {
                 console.log(result);
                 res.render('index', {data: result})
-            });
+            }).catch(res);
     } else {
         scrap.find(['https://www.trustpilot.com/', 'https://www.trustedshops.de/'], ['search?query=', 'bewertung/info_'], ["TrustPilot", "TrustedShops"], query)
             .then((result) => {
