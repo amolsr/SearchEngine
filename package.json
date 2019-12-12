@@ -19,6 +19,9 @@
     "request-promise": "^4.2.5",
     "puppeteer": "^2.0.0"
   },
+  "engines": {
+    "node": "v13.3.0"
+  },
   "devDependencies": {
     "nodemon": "^2.0.1"
   }
